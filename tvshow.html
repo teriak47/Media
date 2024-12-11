@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Séries TV</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Liste des Séries TV</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Année</th>
+                <th>Note</th>
+            </tr>
+        </thead>
+        <tbody id="seriesTable"></tbody>
+    </table>
+
+    <script>
+        // Charger les données JSON et filtrer les séries TV
+        fetch('seriesData.json')
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.getElementById("seriesTable");
+                const tvShows = data.filter(item => item.Type === "tv show"); // Filtrer par "tv show"
+
+                tvShows.forEach(series => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${series.Title}</td>
+                        <td>${series.Year}</td>
+                        <td>${series.Rating}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Erreur de chargement:', error));
+    </script>
+</body>
+
+</html>
